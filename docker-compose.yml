@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+    db:
+        # image はbuildをせず既存イメージを用いる場合に使う.
+        build: "./db"
+        # environment は環境変数などのexportをしてくれる.
+        # mysqlのようにenvironmentで指定が必須の変数もあるので、公式イメージを利用する際には注意.
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_DATABASE: sample-database
+        ports:
+            - "3306:3306"
+        # 永続化が必要なものに対してはvolumesなどでホスト側に残すs
+        volumes:
+            - "./mysql:/var/lib/mysql"
+
+    web:
+        # depends_onで依存関係を示す.appでmysqlを使いたいのでdbコンテナを指定.
+        depends_on:
+            - db
+        # build はDockerfileからビルドすることを示す.
+        # pathは相対パスになるので、build/app/Dockerfileが読まれる.
+        build: "./web"
+        # ports でポートフォワーディングを指定.
+        ports:
+            - "3306:80"
+        # volumes でマウントの指定.こちらも相対パス.
+        volumes:
+            - "./src:/var/www/html"
+        # links で連携させるコンテナを示す.
+        # depends_onはビルド時に依存関係を考慮してビルドさせるために指定.
+        # links は appコンテナの/etc/hostsにdbのipを記述してくれる.
+        links:
+            - db
