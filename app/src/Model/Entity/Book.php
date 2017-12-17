@@ -9,7 +9,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $name
  * @property string $auther
- * @property int $Publisher_id
+ * @property int $Publishers_id
  * @property int $price
  *
  * @property \App\Model\Entity\Publisher $publisher
@@ -29,7 +29,7 @@ class Book extends Entity
     protected $_accessible = [
         'name' => true,
         'auther' => true,
-        'Publisher_id' => true,
+        'Publishers_id' => true,
         'price' => true,
         'publisher' => true
     ];

@@ -27,7 +27,7 @@ class RecommendationsTableTest extends TestCase
         'app.recommendations',
         'app.users',
         'app.books',
-        'app.publisher'
+        'app.publishers'
     ];
 
     /**

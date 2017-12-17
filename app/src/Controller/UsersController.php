@@ -11,6 +11,13 @@ use App\Controller\AppController;
  */
 class UsersController extends AppController
 {
+    /**
+     * 
+     */
+    public function beforeFilter(\Cake\Event\Event $event) {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['add']);
+    }
 
     /**
      * Index method
@@ -106,5 +113,30 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    /**
+     * ログインページ
+     * @return type
+     */
+    public function login()
+    {
+        if($this->request->is('post')){
+            $user = $this->Auth->identify();
+            if($user){
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error('ユーザー名かパスワードが間違ってまっせ');
+        }
+    }
+
+    /**
+     * ログアウト
+     * @return type
+     */
+    public function logout()
+    {
+        $this->Flash->success('ログアウトしました');
+        return $this->redirect($this->Auth->logout());
     }
 }

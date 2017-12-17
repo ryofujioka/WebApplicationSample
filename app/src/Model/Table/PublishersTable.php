@@ -50,7 +50,8 @@ class PublishersTable extends Table
         $validator
             ->scalar('name')
             ->maxLength('name', 45)
-            ->allowEmpty('name');
+            ->requirePresence('name', 'create')
+            ->notEmpty('name');
 
         return $validator;
     }

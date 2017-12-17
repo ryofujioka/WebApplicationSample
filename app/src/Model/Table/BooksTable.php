@@ -9,7 +9,7 @@ use Cake\Validation\Validator;
 /**
  * Books Model
  *
- * @property |\Cake\ORM\Association\BelongsTo $Publishers
+ * @property \App\Model\Table\PublishersTable|\Cake\ORM\Association\BelongsTo $Publishers
  *
  * @method \App\Model\Entity\Book get($primaryKey, $options = [])
  * @method \App\Model\Entity\Book newEntity($data = null, array $options = [])
@@ -37,7 +37,7 @@ class BooksTable extends Table
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Publishers', [
-            'foreignKey' => 'Publisher_id'
+            'foreignKey' => 'Publishers_id'
         ]);
     }
 
@@ -81,7 +81,7 @@ class BooksTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['Publisher_id'], 'Publishers'));
+        $rules->add($rules->existsIn(['Publishers_id'], 'Publishers'));
 
         return $rules;
     }
